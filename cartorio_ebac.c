@@ -12,7 +12,8 @@ int registro(){
 	char sobrenome[40];
 	char cargo[40];
 	int opcao = 0;
-	int registrar(){
+		//variável para criação de um novo arquivo.
+	int registrar(){ 
 			FILE *file;  //Cria um arquivo
 			file = fopen(arquivo, "w");  //fopen abre o arquivo. "w" serve para criar um novo arquivo.
 			fprintf(file, "CPF: ");  //salva o arquivo.
@@ -92,13 +93,13 @@ int registro(){
 	FILE *file;
 	file = fopen(cpf, "r");
 	
-	if(file == NULL){
+	if(file == NULL){  
 		registrar();
 		
 		system("cls");
 		printf("Usuario registrado!\n\n");
 		system("pause");
-	}else{
+	}else{		//opção de ediçao de um usuário já encontrado.
 		printf("Esse arquivo ja existe!\n\n");
 		printf("Deseja edita-lo?\n\t1 - Sim!\n\t2 - Não!");
 		printf("opção: ");
@@ -227,45 +228,72 @@ int deletar(){
 }
 
 int main(){
+	setlocale (LC_ALL, "Portuguese");
+	
 	int opcao=0;  //Definindo um valor para a variável.
 	int i=1;
+	char usuario[40]="a";
+	char senha[10]="b";
+	int comparacao1;
+	int comparacao2;
 	
-	for(i=1;i=1;){  //estrutura de repetição. 
-		
-		system("cls");  //comando para limpar a tela do usuário a cada atualização.
+	printf("\n  | Cartorio da EBAC |\n\n\n");
+	printf("Informe o Usuário e senha.\n\n");
+	printf("\n\tUsuário: ");
+	scanf("%s",usuario);
+	printf("\n\tSenha: ");
+	scanf("%s", senha);
 	
-		setlocale (LC_ALL, "Portuguese"); // em tese serviria para definir a região que a biblioteca vai usar as alocações de texto.
+	comparacao1 = strcmp(usuario, "administrador");
+	comparacao2 = strcmp(senha, "adm123");
 	
-		printf("\n  | Cartorio da EBAC |\n\n\n");  //printf é ultilizado para passar um texto para o usuário.
-		printf(" Selecione a opcao desejada no menu:\n\n");
-		printf("\t1 - Registrar Nome\n");  //\t é ultilizado para dar um espaçamento antes do texto.
-		printf("\t2 - Consultar Nomes\n");
-		printf("\t3 - Deletar Nome\n"); 
-		printf("\t4 - Fechar Programa\n\n\n");
-		printf("Opcao: ");  //fim do menu
+	if(comparacao1 == 0 && comparacao2 == 0){
+	
+		for(i=1;i=1;){  //estrutura de repetição. 
+			
+			system("cls");  //comando para limpar a tela do usuário a cada atualização.
 		
-		scanf("%d",&opcao);  //armazena a resposta do usuário na variável. (tipo o prompt).
+			setlocale (LC_ALL, "Portuguese"); // em tese serviria para definir a região que a biblioteca vai usar as alocações de texto.
 		
+			printf("\n  | Cartorio da EBAC |\n\n\n\n");  //printf é ultilizado para passar um texto para o usuário.
+			printf("Seja bem vindo, EBACER!\n\n\n");
+			printf("Selecione a opcao desejada no menu:\n\n");
+			printf("\t1 - Registrar Nome\n");  //\t é ultilizado para dar um espaçamento antes do texto.
+			printf("\t2 - Consultar Nomes\n");
+			printf("\t3 - Deletar Nome\n"); 
+			printf("\t4 - Fechar Programa\n\n\n");
+			printf("Opcao: ");  //fim do menu
+			
+			scanf("%d",&opcao);  //armazena a resposta do usuário na variável. (tipo o prompt).
+			
+			system("cls");
+			
+			switch(opcao){
+				case 1:
+					registro();
+				break;
+				case 2:
+					consulta();
+				break;	
+				case 3:
+					deletar();
+				break;
+				case 4:
+					printf("Encerrando o programa...\n\n");
+					return 0;   // retorno 0, então fecha o programa.
+				break;
+				default:
+					printf("Opcao invalida.\n\n");
+					system("pause"); 
+					break;		
+			}	
+		}
+	}else{
 		system("cls");
-		
-		switch(opcao){
-			case 1:
-				registro();
-			break;
-			case 2:
-				consulta();
-			break;	
-			case 3:
-				deletar();
-			break;
-			case 4:
-				printf("Encerrando o programa...\n\n");
-				return 0;   // retorno 0, então fecha o programa.
-			break;
-			default:
-				printf("Opcao invalida.\n\n");
-				system("pause"); 
-				break;		
-		}	
+		printf("Usuário ou senha incorreto. Tente novamente.\n\n\n");
+		system("pause");
+		system("cls");
+		main();
+	
 	}
 } 
